@@ -1,26 +1,33 @@
-import React, { Component } from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom' 
+import React,{Component} from 'react';
+import {BrowserRouter as Router,Route} from 'react-router-dom';
+import Home from './home/Home';
+import Details from './details/Details';
+import Checkout from './checkout/Checkout';
+import Profile from './profile/Profile';
 
-import Error404 from './error404/Error404'
-import Home from './home/Home'
 
-export default class extends Component {
 
-  constructor() {
-    super();
-    this.baseUrl = "http://localhost:8080/api/";
+//Creating controller class for easy routing the pages
+class Controller extends Component{
+  constructor(){
+    super()
+    this.baseUrl = "http://localhost:8080/api/" //setting the baseUrl of the api
   }
 
-  render() {
-    return (
-      <Router>
-        <Switch>
-          <Route exact path="/" render={(props) => <Home {...props} baseUrl={this.baseUrl} />} />
-          <Route>
-            <Error404 />
-          </Route>
-        </Switch>
-      </Router>
+  render(){
+    return(
+        <Router>
+          <div className = 'main-conatiner'>
+            <Route exact path = '/' render={(props) => <Home {...props} baseUrl = {this.baseUrl}/>}/> {/* Route to home Page */ }
+            <Route path='/restaurant/:id' render={(props) => <Details {...props} baseUrl={this.baseUrl} />} /> {/* Route to restaurant details Page */}
+            <Route path='/profile' render={(props) => <Profile {...props} baseUrl={this.baseUrl} />} /> {/* Route to Profile Page */}
+            <Route path='/checkout' render={(props) => <Checkout {...props} baseUrl={this.baseUrl} />} /> {/* Route to Checkout Page */}
+          </div>
+        </Router>
+
     )
   }
+
 }
+
+export default Controller;
